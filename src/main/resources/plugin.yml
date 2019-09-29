@@ -1,4 +1,4 @@
-main: me.duncanleo.spigot_plugin_base.App
-name: SpigotPluginBase
+main: me.duncanleo.mc_auth.App
+name: MCAuth
 version: '0.1'
 api: '1'
