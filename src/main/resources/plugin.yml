@@ -1,0 +1,4 @@
+main: me.duncanleo.spigot_plugin_base.App
+name: SpigotPluginBase
+version: '0.1'
+api: '1'
