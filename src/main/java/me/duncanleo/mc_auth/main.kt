@@ -15,7 +15,7 @@ import me.duncanleo.mc_auth.model.*
 import me.duncanleo.mc_auth.commands.*
 import org.jetbrains.exposed.sql.transactions.transaction
 
-class App : JavaPlugin(), Listener {
+class App : JavaPlugin(), Listener, TabCompleter {
   companion object {
     val usersLocationMap = mutableMapOf<String, Location>()
     val usersMap = mutableMapOf<String, Boolean>()
@@ -26,7 +26,9 @@ class App : JavaPlugin(), Listener {
 
     server.pluginManager.registerEvents(this, this)
     getCommand("login")?.setExecutor(LoginCommand())
+    getCommand("login")?.setTabCompleter(this)
     getCommand("register")?.setExecutor(RegisterCommand())
+    getCommand("register")?.setTabCompleter(this)
 
     saveDefaultConfig()
 
@@ -74,6 +76,10 @@ class App : JavaPlugin(), Listener {
     if (!isAuthenticated(event.player.displayName)) {
       event.isCancelled = true
     }
+  }
+
+  public override fun onTabComplete(sender: CommandSender, cmd: Command, alias: String, args: Array<String>): List<String> {
+    return listOf()
   }
 
   private fun isAuthenticated(playerName: String): Boolean {
