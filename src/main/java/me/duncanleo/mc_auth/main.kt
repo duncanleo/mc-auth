@@ -1,5 +1,6 @@
 package me.duncanleo.mc_auth
 
+import java.io.File
 import org.bukkit.plugin.java.JavaPlugin
 import org.bukkit.Location
 import org.bukkit.event.Listener
@@ -29,7 +30,7 @@ class App : JavaPlugin(), Listener {
 
     saveDefaultConfig()
 
-    Database.connect("jdbc:sqlite:users.db", driver = "org.sqlite.JDBC")
+    Database.connect("jdbc:sqlite:${File(dataFolder, "users.db").absolutePath}", driver = "org.sqlite.JDBC")
     
     transaction {
       addLogger(StdOutSqlLogger)
