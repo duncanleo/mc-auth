@@ -27,6 +27,8 @@ class App : JavaPlugin(), Listener {
     getCommand("login")?.setExecutor(LoginCommand())
     getCommand("register")?.setExecutor(RegisterCommand())
 
+    saveDefaultConfig()
+
     Database.connect("jdbc:sqlite:users.db", driver = "org.sqlite.JDBC")
     
     transaction {
@@ -53,7 +55,7 @@ class App : JavaPlugin(), Listener {
           event.player.kickPlayer("Did not log in/register in time")
         }
       }
-    }.runTaskLater(this, 20 * 60)
+    }.runTaskLater(this, 20 * config.getLong("login_timeout_sec", 60))
   }
 
   @EventHandler
