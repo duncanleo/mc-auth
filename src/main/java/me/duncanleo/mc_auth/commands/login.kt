@@ -7,6 +7,7 @@ import org.bukkit.entity.Player
 import org.bukkit.event.player.PlayerTeleportEvent
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
+import org.springframework.security.crypto.bcrypt.*
 
 class LoginCommand : CommandExecutor {
   override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<String>): Boolean {
@@ -26,7 +27,7 @@ class LoginCommand : CommandExecutor {
       } else {
         val user = matchingUsers.first()
         val attemptPassword = args.first()
-        if (attemptPassword == user[Users.passwordHash]) {
+        if (BCryptPasswordEncoder().matches(attemptPassword, user[Users.passwordHash])) {
           val savedLocation = App.usersLocationMap[sender.displayName]
           if (savedLocation != null) {
             sender.teleport(savedLocation, PlayerTeleportEvent.TeleportCause.PLUGIN)

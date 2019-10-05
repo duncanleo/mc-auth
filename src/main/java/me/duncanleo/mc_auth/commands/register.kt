@@ -5,6 +5,7 @@ import org.bukkit.command.*
 import org.bukkit.entity.Player
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
+import org.springframework.security.crypto.bcrypt.*
 
 class RegisterCommand : CommandExecutor {
   override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<String>): Boolean {
@@ -30,7 +31,7 @@ class RegisterCommand : CommandExecutor {
       } else {
         Users.insert {
           it[name] = sender.displayName
-          it[passwordHash] = password
+          it[passwordHash] = BCryptPasswordEncoder().encode(password)
         }
         sender.sendMessage("Registered, please login")
       }

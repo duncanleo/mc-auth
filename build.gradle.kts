@@ -30,6 +30,7 @@ dependencies {
   implementation("org.spigotmc:spigot-api:1.14.3-SNAPSHOT")
   implementation("org.jetbrains.exposed:exposed:0.17.4")
   implementation("org.xerial:sqlite-jdbc:3.21.0.1")
+  implementation("org.springframework.security:spring-security-core:5.2.0.RELEASE")
 }
 
 tasks.withType<KotlinCompile> {
