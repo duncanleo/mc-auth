@@ -2,3 +2,10 @@ main: me.duncanleo.mc_auth.App
 name: MCAuth
 version: '0.1'
 api: '1'
+commands:
+  login:
+    description: Login to the server
+    usage: /login <password>
+  register:
+    description: Register for an account
+    usage: /register <password> <password>
