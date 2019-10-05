@@ -46,6 +46,9 @@ class App : JavaPlugin(), Listener {
     usersLocationMap[displayName] = event.player.location
     usersMap[displayName] = false
 
+    // Teleport to world spawn first
+    event.player.teleport(event.player.world.spawnLocation)
+
     event.player.sendMessage("Please log in to the server.")
 
     object: BukkitRunnable() {
