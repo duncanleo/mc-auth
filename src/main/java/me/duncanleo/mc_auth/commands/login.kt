@@ -2,6 +2,7 @@ package me.duncanleo.mc_auth.commands
 
 import me.duncanleo.mc_auth.App
 import me.duncanleo.mc_auth.model.*
+import me.duncanleo.mc_auth.util.displayNameStripped
 import org.bukkit.command.*
 import org.bukkit.entity.Player
 import org.bukkit.event.player.PlayerTeleportEvent
@@ -20,7 +21,7 @@ class LoginCommand : CommandExecutor {
       return false
     }
     transaction {
-      val matchingUsers = Users.select { Users.name eq sender.displayName }.toList()
+      val matchingUsers = Users.select { Users.name eq sender.displayNameStripped }.toList()
 
       if (matchingUsers.isEmpty()) {
         sender.sendMessage("You do not have an account")

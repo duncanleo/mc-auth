@@ -13,6 +13,7 @@ import org.bukkit.scheduler.BukkitRunnable
 import org.jetbrains.exposed.sql.*
 import me.duncanleo.mc_auth.model.*
 import me.duncanleo.mc_auth.commands.*
+import me.duncanleo.mc_auth.util.displayNameStripped
 import org.jetbrains.exposed.sql.transactions.transaction
 
 class App : JavaPlugin(), Listener, TabCompleter {
@@ -43,7 +44,7 @@ class App : JavaPlugin(), Listener, TabCompleter {
 
   @EventHandler
   public fun onPlayerJoin(event: PlayerJoinEvent) {
-    val displayName = event.player.displayName
+    val displayName = event.player.displayNameStripped
 
     // Maps
     usersLocationMap[displayName] = event.player.location
@@ -66,14 +67,14 @@ class App : JavaPlugin(), Listener, TabCompleter {
 
   @EventHandler
   public fun onPlayerLeave(event: PlayerQuitEvent) {
-    val displayName = event.player.displayName
+    val displayName = event.player.displayNameStripped
     usersMap.remove(displayName)
     usersLocationMap.remove(displayName)
   }
 
   @EventHandler
   public fun onPlayerMove(event: PlayerMoveEvent) {
-    if (!isAuthenticated(event.player.displayName)) {
+    if (!isAuthenticated(event.player.displayNameStripped)) {
       event.isCancelled = true
     }
   }
