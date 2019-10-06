@@ -1,6 +1,6 @@
 main: me.duncanleo.mc_auth.App
 name: MCAuth
-version: '0.1.2'
+version: '0.1.3'
 api: '1'
 commands:
   login:
