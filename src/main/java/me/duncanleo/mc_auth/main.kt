@@ -14,6 +14,7 @@ import org.jetbrains.exposed.sql.*
 import me.duncanleo.mc_auth.model.*
 import me.duncanleo.mc_auth.commands.*
 import me.duncanleo.mc_auth.util.displayNameStripped
+import org.bukkit.ChatColor
 import org.bukkit.event.player.PlayerCommandPreprocessEvent
 import org.jetbrains.exposed.sql.transactions.transaction
 
@@ -35,7 +36,7 @@ class App : JavaPlugin(), Listener, TabCompleter {
     saveDefaultConfig()
 
     Database.connect("jdbc:sqlite:${File(dataFolder, "users.db").absolutePath}", driver = "org.sqlite.JDBC")
-    
+
     transaction {
       addLogger(StdOutSqlLogger)
       
@@ -54,7 +55,13 @@ class App : JavaPlugin(), Listener, TabCompleter {
     // Teleport to world spawn first
     event.player.teleport(event.player.world.spawnLocation)
 
-    event.player.sendMessage("Please log in to the server.")
+    object: BukkitRunnable() {
+      override fun run() {
+        event.player.sendMessage("${ChatColor.DARK_AQUA}== AUTHENTICATION REQUIRED ==")
+        event.player.sendMessage("${ChatColor.DARK_AQUA}Please either log in to the server with ${ChatColor.AQUA}/login <password>")
+        event.player.sendMessage("${ChatColor.DARK_AQUA}or register an account with ${ChatColor.AQUA}/register <password> <confirmPassword>")
+      }
+    }.runTaskLater(this, 20 * 3)
 
     object: BukkitRunnable() {
       override fun run() {
