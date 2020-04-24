@@ -9,3 +9,6 @@ commands:
   register:
     description: Register for an account
     usage: /register <password> <password>
+  changepw:
+    description: change password
+    usage: /changepw <password> <password>

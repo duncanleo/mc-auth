@@ -29,9 +29,11 @@ class App : JavaPlugin(), Listener, TabCompleter {
 
     server.pluginManager.registerEvents(this, this)
     getCommand("login")?.setExecutor(LoginCommand())
-    getCommand("login")?.setTabCompleter(this)
-    getCommand("register")?.setExecutor(RegisterCommand())
-    getCommand("register")?.setTabCompleter(this)
+    getCommand("login")?.tabCompleter = this
+    getCommand("register")?.setExecutor(ChangePasswordCommand())
+    getCommand("register")?.tabCompleter = this
+    getCommand("changepw")?.setExecutor(ChangePasswordCommand())
+    getCommand("changepw")?.tabCompleter = this
 
     saveDefaultConfig()
 
