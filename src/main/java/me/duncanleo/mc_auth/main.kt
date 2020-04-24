@@ -14,6 +14,7 @@ import org.jetbrains.exposed.sql.*
 import me.duncanleo.mc_auth.model.*
 import me.duncanleo.mc_auth.commands.*
 import me.duncanleo.mc_auth.util.displayNameStripped
+import org.bukkit.event.player.PlayerCommandPreprocessEvent
 import org.jetbrains.exposed.sql.transactions.transaction
 
 class App : JavaPlugin(), Listener, TabCompleter {
@@ -75,6 +76,13 @@ class App : JavaPlugin(), Listener, TabCompleter {
   @EventHandler
   public fun onPlayerMove(event: PlayerMoveEvent) {
     if (!isAuthenticated(event.player.displayNameStripped)) {
+      event.isCancelled = true
+    }
+  }
+
+  @EventHandler
+  fun onPlayerCommand(event: PlayerCommandPreprocessEvent) {
+    if (!isAuthenticated(event.player.displayNameStripped) && !event.message.startsWith("/login") && !event.message.startsWith("/register")) {
       event.isCancelled = true
     }
   }
