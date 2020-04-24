@@ -69,7 +69,7 @@ class App : JavaPlugin(), Listener, TabCompleter {
       override fun run() {
         if (usersMap[displayName] == false) {
           // Still unregistered
-          event.player.kickPlayer("Did not log in/register in time")
+          event.player.kickPlayer("${ChatColor.DARK_AQUA}Did not log in/register in time")
         }
       }
     }.runTaskLater(this, 20 * config.getLong("login_timeout_sec", 60))

@@ -4,6 +4,7 @@ import me.duncanleo.mc_auth.App
 import me.duncanleo.mc_auth.model.Users
 import me.duncanleo.mc_auth.util.displayNameStripped
 import org.bukkit.Bukkit
+import org.bukkit.ChatColor
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
@@ -20,14 +21,14 @@ class LoginCommand : CommandExecutor {
       return true
     }
     if (args.isEmpty()) {
-      sender.sendMessage("Not enough arguments")
+      sender.sendMessage("${ChatColor.DARK_AQUA}Not enough arguments")
       return false
     }
     transaction {
       val matchingUsers = Users.select { Users.name eq sender.displayNameStripped }.toList()
 
       if (matchingUsers.isEmpty()) {
-        sender.sendMessage("You do not have an account")
+        sender.sendMessage("${ChatColor.DARK_AQUA}You do not have an account")
       } else {
         val user = matchingUsers.first()
         val attemptPassword = args.first()
@@ -38,9 +39,9 @@ class LoginCommand : CommandExecutor {
           }
           App.usersMap[sender.displayNameStripped] = true
           App.usersLocationMap.remove(sender.displayNameStripped)
-          sender.sendMessage("Logged in!")
+          sender.sendMessage("${ChatColor.DARK_AQUA}Logged in!")
         } else {
-          sender.sendMessage("Incorrect password")
+          sender.sendMessage("${ChatColor.DARK_AQUA}Incorrect password")
         }
       }
     }
