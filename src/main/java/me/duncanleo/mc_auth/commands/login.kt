@@ -1,14 +1,17 @@
 package me.duncanleo.mc_auth.commands
 
 import me.duncanleo.mc_auth.App
-import me.duncanleo.mc_auth.model.*
+import me.duncanleo.mc_auth.model.Users
 import me.duncanleo.mc_auth.util.displayNameStripped
-import org.bukkit.command.*
+import org.bukkit.Bukkit
+import org.bukkit.command.Command
+import org.bukkit.command.CommandExecutor
+import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import org.bukkit.event.player.PlayerTeleportEvent
-import org.jetbrains.exposed.sql.*
+import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.transactions.transaction
-import org.springframework.security.crypto.bcrypt.*
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 
 class LoginCommand : CommandExecutor {
   override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<String>): Boolean {
@@ -33,8 +36,8 @@ class LoginCommand : CommandExecutor {
           if (savedLocation != null) {
             sender.teleport(savedLocation, PlayerTeleportEvent.TeleportCause.PLUGIN)
           }
-          App.usersMap[sender.displayName] = true
-          App.usersLocationMap.remove(sender.displayName)
+          App.usersMap[sender.displayNameStripped] = true
+          App.usersLocationMap.remove(sender.displayNameStripped)
           sender.sendMessage("Logged in!")
         } else {
           sender.sendMessage("Incorrect password")
