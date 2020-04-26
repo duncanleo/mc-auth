@@ -1,19 +1,28 @@
 package me.duncanleo.mc_auth
 
-import java.io.File
-import org.bukkit.plugin.java.JavaPlugin
-import org.bukkit.Location
-import org.bukkit.event.Listener
-import org.bukkit.event.EventHandler
-import org.bukkit.command.*
-import org.bukkit.scheduler.BukkitRunnable
-import org.jetbrains.exposed.sql.*
-import me.duncanleo.mc_auth.model.*
-import me.duncanleo.mc_auth.commands.*
+import me.duncanleo.mc_auth.commands.ChangePasswordCommand
+import me.duncanleo.mc_auth.commands.LoginCommand
+import me.duncanleo.mc_auth.model.Users
 import me.duncanleo.mc_auth.util.displayNameStripped
 import org.bukkit.ChatColor
-import org.bukkit.event.player.*
+import org.bukkit.Location
+import org.bukkit.command.Command
+import org.bukkit.command.CommandSender
+import org.bukkit.command.TabCompleter
+import org.bukkit.event.EventHandler
+import org.bukkit.event.Listener
+import org.bukkit.event.player.PlayerCommandPreprocessEvent
+import org.bukkit.event.player.PlayerJoinEvent
+import org.bukkit.event.player.PlayerMoveEvent
+import org.bukkit.event.player.PlayerQuitEvent
+import org.bukkit.plugin.java.JavaPlugin
+import org.bukkit.scheduler.BukkitRunnable
+import org.jetbrains.exposed.sql.Database
+import org.jetbrains.exposed.sql.SchemaUtils
+import org.jetbrains.exposed.sql.StdOutSqlLogger
+import org.jetbrains.exposed.sql.addLogger
 import org.jetbrains.exposed.sql.transactions.transaction
+import java.io.File
 
 class App : JavaPlugin(), Listener, TabCompleter {
   companion object {
@@ -91,13 +100,6 @@ class App : JavaPlugin(), Listener, TabCompleter {
   fun onPlayerCommand(event: PlayerCommandPreprocessEvent) {
     if (!isAuthenticated(event.player.displayNameStripped) && !event.message.startsWith("/login") && !event.message.startsWith("/register")) {
       event.isCancelled = true
-    }
-  }
-
-  @EventHandler
-  fun onPlayerAutocompleteCommands(event: PlayerCommandSendEvent) {
-    if (!isAuthenticated(event.player.displayNameStripped)) {
-      event.commands.removeIf { it != "login" && it != "register" }
     }
   }
 
