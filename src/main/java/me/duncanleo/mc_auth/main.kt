@@ -66,6 +66,7 @@ class App : JavaPlugin(), Listener, TabCompleter {
       override fun run() {
         if (usersMap[displayName] == false) {
           // Still unregistered
+          usersLocationMap[displayName]?.let { event.player.teleport(it) }
           event.player.kickPlayer("${ChatColor.DARK_AQUA}Did not log in/register in time")
         }
       }
