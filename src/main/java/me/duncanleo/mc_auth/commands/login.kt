@@ -33,7 +33,7 @@ class LoginCommand : CommandExecutor {
         val user = matchingUsers.first()
         val attemptPassword = args.first()
         if (BCryptPasswordEncoder().matches(attemptPassword, user[Users.passwordHash])) {
-          val savedLocation = App.usersLocationMap[sender.displayName]
+          val savedLocation = App.usersLocationMap[sender.displayNameStripped]
           if (savedLocation != null) {
             sender.teleport(savedLocation, PlayerTeleportEvent.TeleportCause.PLUGIN)
           }
