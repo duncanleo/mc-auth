@@ -2,6 +2,7 @@ package me.duncanleo.mc_auth
 
 import me.duncanleo.mc_auth.commands.ChangePasswordCommand
 import me.duncanleo.mc_auth.commands.LoginCommand
+import me.duncanleo.mc_auth.commands.RegisterCommand
 import me.duncanleo.mc_auth.model.Users
 import me.duncanleo.mc_auth.util.displayNameStripped
 import org.bukkit.ChatColor
@@ -36,7 +37,7 @@ class App : JavaPlugin(), Listener, TabCompleter {
     server.pluginManager.registerEvents(this, this)
     getCommand("login")?.setExecutor(LoginCommand())
     getCommand("login")?.tabCompleter = this
-    getCommand("register")?.setExecutor(ChangePasswordCommand())
+    getCommand("register")?.setExecutor(RegisterCommand())
     getCommand("register")?.tabCompleter = this
     getCommand("changepw")?.setExecutor(ChangePasswordCommand())
     getCommand("changepw")?.tabCompleter = this
