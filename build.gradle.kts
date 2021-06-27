@@ -27,7 +27,7 @@ repositories {
 dependencies {
   implementation(kotlin("stdlib"))
 
-  implementation("org.spigotmc:spigot-api:1.15.2-R0.1-SNAPSHOT")
+  implementation("org.spigotmc:spigot-api:1.17-R0.1-SNAPSHOT")
   implementation("org.jetbrains.exposed:exposed:0.17.4")
   implementation("org.xerial:sqlite-jdbc:3.21.0.1")
   implementation("org.springframework.security:spring-security-core:5.2.0.RELEASE")
